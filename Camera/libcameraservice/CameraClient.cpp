@@ -364,6 +364,7 @@ status_t CameraClient::startRecording() {
         // return BAD_VALUE;
         // return UNKNOWN_ERROR;
         return NO_ERROR;
+        // return startPreviewMode();
     }
     return startCameraMode(CAMERA_RECORDING_MODE);
 }
@@ -374,10 +375,7 @@ status_t CameraClient::startCameraMode(camera_mode mode) {
     Mutex::Autolock lock(mLock);
     status_t result = checkPidAndHardware();
     if (result != NO_ERROR) return result;
-
-    // capsane
     // int accessFlag = 0;
-
     switch(mode) {
         case CAMERA_PREVIEW_MODE:
             if (mSurface == 0 && mPreviewWindow == 0) {
