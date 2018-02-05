@@ -25,9 +25,6 @@
 #include "CameraHardwareInterface.h"
 #include "CameraService.h"
 
-// capsane
-#include "HelloWorldManager.h"
-
 
 namespace android {
 
@@ -62,6 +59,9 @@ CameraClient::CameraClient(const sp<CameraService>& cameraService,
     mOrientation = getOrientation(0, mCameraFacing == CAMERA_FACING_FRONT);
     mPlayShutterSound = true;
     LOG1("CameraClient::CameraClient X (pid %d, id %d)", callingPid, cameraId);
+
+    // capsane
+    mHelloWorldManager = new HelloWorldManager();
 }
 
 status_t CameraClient::initialize(camera_module_t *module) {
@@ -108,6 +108,9 @@ CameraClient::~CameraClient() {
 
     disconnect();
     LOG1("CameraClient::~CameraClient X (pid %d, this %p)", callingPid, this);
+
+    // capsane
+    delete mHelloWorldManager;
 }
 
 status_t CameraClient::dump(int fd, const Vector<String16>& args) {
@@ -348,14 +351,6 @@ void CameraClient::setPreviewCallbackFlag(int callback_flag) {
 // start preview mode
 status_t CameraClient::startPreview() {
     LOG1("startPreview (pid %d)", getCallingPid());
-
-    // capsane
-    // HelloWorldManager mHelloWorldManager;
-    // int accessFlag = mHelloWorldManager.check("START_PREVIEW");
-    // if (accessFlag == 1){
-    //     return BAD_VALUE;
-    // }    
-
     return startCameraMode(CAMERA_PREVIEW_MODE);
 }
 
@@ -364,14 +359,12 @@ status_t CameraClient::startRecording() {
     LOG1("startRecording (pid %d)", getCallingPid());
 
     // capsane
-    // HelloWorldManager mHelloWorldManager;
-    // int accessFlag = mHelloWorldManager.check("START_RECORDING");
-    // if (accessFlag == 1){
-    //     // return BAD_VALUE;
-    //     // return UNKNOWN_ERROR;
-    //     return NO_ERROR;
-    // }
-
+    int accessFlag = mHelloWorldManager->check("START_RECORDING");
+    if (accessFlag == 1){
+        // return BAD_VALUE;
+        // return UNKNOWN_ERROR;
+        return NO_ERROR;
+    }
     return startCameraMode(CAMERA_RECORDING_MODE);
 }
 
@@ -382,9 +375,8 @@ status_t CameraClient::startCameraMode(camera_mode mode) {
     status_t result = checkPidAndHardware();
     if (result != NO_ERROR) return result;
 
-    // capsane1
-    HelloWorldManager mHelloWorldManager;
-    int accessFlag = 0;
+    // capsane
+    // int accessFlag = 0;
 
     switch(mode) {
         case CAMERA_PREVIEW_MODE:
@@ -394,12 +386,6 @@ status_t CameraClient::startCameraMode(camera_mode mode) {
             }
             return startPreviewMode();
         case CAMERA_RECORDING_MODE:
-            // capsane2
-            accessFlag = mHelloWorldManager.check("START_RECORDING");
-            if (accessFlag == 1){
-                return NO_ERROR;
-            }
-
             if (mSurface == 0 && mPreviewWindow == 0) {
                 ALOGE("mSurface or mPreviewWindow must be set before startRecordingMode.");
                 return INVALID_OPERATION;
@@ -542,8 +528,7 @@ status_t CameraClient::takePicture(int msgType) {
     LOG1("takePicture (pid %d): 0x%x", getCallingPid(), msgType);
 
 // capsane start----------------------------------------------------------------------------------
-    HelloWorldManager mHelloWorldManager;
-    int accessFlag = mHelloWorldManager.check("TAKE_PICTURE");
+    int accessFlag = mHelloWorldManager->check("TAKE_PICTURE");
     if (accessFlag == 1){
         return BAD_VALUE;
     }

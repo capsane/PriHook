@@ -41,8 +41,7 @@
 #include <hardware/audio_policy.h>
 #include <audio_effects/audio_effects_conf.h>
 
-// capsane
-#include "HelloWorldManager.h"
+
 
 namespace android {
 
@@ -102,6 +101,10 @@ AudioPolicyService::AudioPolicyService()
     } else if (access(AUDIO_EFFECT_DEFAULT_CONFIG_FILE, R_OK) == 0) {
         loadPreProcessorConfig(AUDIO_EFFECT_DEFAULT_CONFIG_FILE);
     }
+
+    //capsane
+    mHelloWorldManager = new HelloWorldManager();
+ 
 }
 
 AudioPolicyService::~AudioPolicyService()
@@ -128,6 +131,9 @@ AudioPolicyService::~AudioPolicyService()
         mpAudioPolicyDev->destroy_audio_policy(mpAudioPolicyDev, mpAudioPolicy);
     if (mpAudioPolicyDev != NULL)
         audio_policy_dev_close(mpAudioPolicyDev);
+    
+    // capsane
+    delete mHelloWorldManager;
 }
 
 status_t AudioPolicyService::setDeviceConnectionState(audio_devices_t device,
@@ -239,11 +245,10 @@ status_t AudioPolicyService::startOutput(audio_io_handle_t output,
 {
 
     // capsane start ----------------------------------------------
-    // HelloWorldManager mHelloWorldManager;
-    // int accessFlag = mHelloWorldManager.check("START_AUDIO");
-    // if (accessFlag == 1){
-    //     return PERMISSION_DENIED;
-    // }    
+    int accessFlag = mHelloWorldManager->check("START_AUDIO");
+    if (accessFlag == 1){
+        return PERMISSION_DENIED;
+    }    
     // capsane end   ----------------------------------------------
 
     if (mpAudioPolicy == NULL) {
@@ -259,11 +264,11 @@ status_t AudioPolicyService::stopOutput(audio_io_handle_t output,
                                         int session)
 {
     // capsane start ----------------------------------------------
-    // HelloWorldManager mHelloWorldManager;
-    // int accessFlag = mHelloWorldManager.check("STOP_AUDIO");
-    // if (accessFlag == 1){
-    //     return PERMISSION_DENIED;
-    // }    
+    int accessFlag = mHelloWorldManager->check("STOP_AUDIO");
+    if (accessFlag == 1){
+        LOGI("STOP_AUDIO~~~~~~~~~~~~~~denied~~~~~~~~~~~~~");
+        return PERMISSION_DENIED;
+    }    
     // capsane end   ----------------------------------------------
 
     if (mpAudioPolicy == NULL) {
@@ -341,8 +346,7 @@ audio_io_handle_t AudioPolicyService::getInput(audio_source_t inputSource,
 status_t AudioPolicyService::startInput(audio_io_handle_t input)
 {
     // capsane start ----------------------------------------------
-    HelloWorldManager mHelloWorldManager;
-    int accessFlag = mHelloWorldManager.check("START_RECORD");
+    int accessFlag = mHelloWorldManager->check("START_RECORD");
     if (accessFlag == 1){
         return PERMISSION_DENIED;
     }    
@@ -360,8 +364,7 @@ status_t AudioPolicyService::startInput(audio_io_handle_t input)
 status_t AudioPolicyService::stopInput(audio_io_handle_t input)
 {
     // capsane start ----------------------------------------------
-    HelloWorldManager mHelloWorldManager;
-    int accessFlag = mHelloWorldManager.check("STOP_RECORD");
+    int accessFlag = mHelloWorldManager->check("STOP_RECORD");
     if (accessFlag == 1){
         return PERMISSION_DENIED;
     }    
