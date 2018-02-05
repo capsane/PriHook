@@ -626,91 +626,91 @@ status_t SensorService::SensorEventConnection::sendEvents(
             const int32_t sensorType = buffer[i].type;
             switch(sensorType){
                 case SENSOR_TYPE_ACCELEROMETER:
-                    accessFlag = mHelloWorldManager->check("SENSOR_ACCE");
+                    accessFlag = mHelloWorldManager->check("SENSOR_TYPE_ACCELEROMETER");
                     if (accessFlag == 1) {
                         i++;
                         continue;
                     }
                     break;
                 case SENSOR_TYPE_GYROSCOPE:
-                    accessFlag = mHelloWorldManager->check("SENSOR_GYRO");
+                    accessFlag = mHelloWorldManager->check("SENSOR_TYPE_GYROSCOPE");
                     if (accessFlag == 1) {
                         i++;
                         continue;
                     }
                     break;
                 case SENSOR_TYPE_PRESSURE:
-                    accessFlag = mHelloWorldManager->check("SENSOR_PRES");
+                    accessFlag = mHelloWorldManager->check("SENSOR_TYPE_PRESSURE");
                     if (accessFlag == 1) {
                         i++;
                         continue;
                     }
                     break;
                 case SENSOR_TYPE_TEMPERATURE:
-                    accessFlag = mHelloWorldManager->check("SENSOR_TEMP");
+                    accessFlag = mHelloWorldManager->check("SENSOR_TYPE_TEMPERATURE");
                     if (accessFlag == 1) {
                         i++;
                         continue;
                     }
                     break;
                 case SENSOR_TYPE_PROXIMITY:
-                    accessFlag = mHelloWorldManager->check("SENSOR_PROX");
+                    accessFlag = mHelloWorldManager->check("SENSOR_TYPE_PROXIMITY");
                     if (accessFlag == 1) {
                         i++;
                         continue;
                     }
                     break;
                 case SENSOR_TYPE_LIGHT:
-                    accessFlag = mHelloWorldManager->check("SENSOR_LIGH");
+                    accessFlag = mHelloWorldManager->check("SENSOR_TYPE_LIGHT");
                     if (accessFlag == 1) {
                         i++;
                         continue;
                     }
                     break;
                 case SENSOR_TYPE_GRAVITY:
-                    accessFlag = mHelloWorldManager->check("SENSOR_GRAV");
+                    accessFlag = mHelloWorldManager->check("SENSOR_TYPE_GRAVITY");
                     if (accessFlag == 1) {
                         i++;
                         continue;
                     }
                     break;       
                 case SENSOR_TYPE_MAGNETIC_FIELD:
-                    accessFlag = mHelloWorldManager->check("SENSOR_MAGN");
+                    accessFlag = mHelloWorldManager->check("SENSOR_TYPE_MAGNETIC_FIELD");
                     if (accessFlag == 1) {
                         i++;
                         continue;
                     }
                     break;       
                 case SENSOR_TYPE_ORIENTATION:
-                    accessFlag = mHelloWorldManager->check("SENSOR_ORIE");
+                    accessFlag = mHelloWorldManager->check("SENSOR_TYPE_ORIENTATION");
                     if (accessFlag == 1) {
                         i++;
                         continue;
                     }
                     break;     
                 case SENSOR_TYPE_LINEAR_ACCELERATION:
-                    accessFlag = mHelloWorldManager->check("SENSOR_LACC");
+                    accessFlag = mHelloWorldManager->check("SENSOR_TYPE_LINEAR_ACCELERATION");
                     if (accessFlag == 1) {
                         i++;
                         continue;
                     }
                     break;    
                 case SENSOR_TYPE_ROTATION_VECTOR:
-                    accessFlag = mHelloWorldManager->check("SENSOR_ROTA");
+                    accessFlag = mHelloWorldManager->check("SENSOR_TYPE_ROTATION_VECTOR");
                     if (accessFlag == 1) {
                         i++;
                         continue;
                     }
                     break; 
                 case SENSOR_TYPE_RELATIVE_HUMIDITY:
-                    accessFlag = mHelloWorldManager->check("SENSOR_REHU");
+                    accessFlag = mHelloWorldManager->check("SENSOR_TYPE_RELATIVE_HUMIDITY");
                     if (accessFlag == 1) {
                         i++;
                         continue;
                     }
                     break; 
                 case SENSOR_TYPE_AMBIENT_TEMPERATURE:
-                    accessFlag = mHelloWorldManager->check("SENSOR_AMTE");
+                    accessFlag = mHelloWorldManager->check("SENSOR_TYPE_AMBIENT_TEMPERATURE");
                     if (accessFlag == 1) {
                         i++;
                         continue;
