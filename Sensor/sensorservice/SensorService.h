@@ -91,6 +91,9 @@ class SensorService :
         SensorEventConnection(const sp<SensorService>& service, uid_t uid);
         // capsane
         HelloWorldManager* mHelloWorldManager;
+        // time
+        int count_acce, count_gyro, count_light;
+        double time_acce, time_gyro, time_light;
 
         status_t sendEvents(sensors_event_t const* buffer, size_t count,
                 sensors_event_t* scratch = NULL);

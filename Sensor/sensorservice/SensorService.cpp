@@ -17,6 +17,7 @@
 #include <stdint.h>
 #include <math.h>
 #include <sys/types.h>
+#include <time.h>
 
 #include <cutils/properties.h>
 
@@ -621,10 +622,14 @@ status_t SensorService::SensorEventConnection::sendEvents(
         // capsane
         int accessFlag = 0;
 
+        clock_t start, finish;
+        double Total_time;
+
         while (i<numEvents) {
             // capsnae 针对该类型传感器的所有注册监听的app
             const int32_t sensorType = buffer[i].type;
             switch(sensorType){
+                
                 case SENSOR_TYPE_ACCELEROMETER:
                     accessFlag = mHelloWorldManager->check("SENSOR_TYPE_ACCELEROMETER");
                     if (accessFlag == 1) {
@@ -632,13 +637,20 @@ status_t SensorService::SensorEventConnection::sendEvents(
                         continue;
                     }
                     break;
+
                 case SENSOR_TYPE_GYROSCOPE:
+                    // capsane start ----------------------------------------------------------------
+                    start = clock();
                     accessFlag = mHelloWorldManager->check("SENSOR_TYPE_GYROSCOPE");
                     if (accessFlag == 1) {
                         i++;
                         continue;
                     }
+                    finish = clock();
+                    Total_time = (double)(finish - start)/CLOCKS_PER_SEC;
+                    LOGI("Time_GYRO: %f\n", Total_time);
                     break;
+
                 case SENSOR_TYPE_PRESSURE:
                     accessFlag = mHelloWorldManager->check("SENSOR_TYPE_PRESSURE");
                     if (accessFlag == 1) {
@@ -646,6 +658,7 @@ status_t SensorService::SensorEventConnection::sendEvents(
                         continue;
                     }
                     break;
+
                 case SENSOR_TYPE_TEMPERATURE:
                     accessFlag = mHelloWorldManager->check("SENSOR_TYPE_TEMPERATURE");
                     if (accessFlag == 1) {
@@ -653,6 +666,7 @@ status_t SensorService::SensorEventConnection::sendEvents(
                         continue;
                     }
                     break;
+
                 case SENSOR_TYPE_PROXIMITY:
                     accessFlag = mHelloWorldManager->check("SENSOR_TYPE_PROXIMITY");
                     if (accessFlag == 1) {
@@ -660,34 +674,39 @@ status_t SensorService::SensorEventConnection::sendEvents(
                         continue;
                     }
                     break;
+
                 case SENSOR_TYPE_LIGHT:
                     accessFlag = mHelloWorldManager->check("SENSOR_TYPE_LIGHT");
                     if (accessFlag == 1) {
                         i++;
                         continue;
                     }
-                    break;
+                    break;  
+
                 case SENSOR_TYPE_GRAVITY:
                     accessFlag = mHelloWorldManager->check("SENSOR_TYPE_GRAVITY");
                     if (accessFlag == 1) {
                         i++;
                         continue;
                     }
-                    break;       
+                    break;  
+                         
                 case SENSOR_TYPE_MAGNETIC_FIELD:
                     accessFlag = mHelloWorldManager->check("SENSOR_TYPE_MAGNETIC_FIELD");
                     if (accessFlag == 1) {
                         i++;
                         continue;
                     }
-                    break;       
+                    break;    
+
                 case SENSOR_TYPE_ORIENTATION:
                     accessFlag = mHelloWorldManager->check("SENSOR_TYPE_ORIENTATION");
                     if (accessFlag == 1) {
                         i++;
                         continue;
                     }
-                    break;     
+                    break;  
+
                 case SENSOR_TYPE_LINEAR_ACCELERATION:
                     accessFlag = mHelloWorldManager->check("SENSOR_TYPE_LINEAR_ACCELERATION");
                     if (accessFlag == 1) {
@@ -695,6 +714,7 @@ status_t SensorService::SensorEventConnection::sendEvents(
                         continue;
                     }
                     break;    
+
                 case SENSOR_TYPE_ROTATION_VECTOR:
                     accessFlag = mHelloWorldManager->check("SENSOR_TYPE_ROTATION_VECTOR");
                     if (accessFlag == 1) {
@@ -702,6 +722,7 @@ status_t SensorService::SensorEventConnection::sendEvents(
                         continue;
                     }
                     break; 
+
                 case SENSOR_TYPE_RELATIVE_HUMIDITY:
                     accessFlag = mHelloWorldManager->check("SENSOR_TYPE_RELATIVE_HUMIDITY");
                     if (accessFlag == 1) {
@@ -709,6 +730,7 @@ status_t SensorService::SensorEventConnection::sendEvents(
                         continue;
                     }
                     break; 
+
                 case SENSOR_TYPE_AMBIENT_TEMPERATURE:
                     accessFlag = mHelloWorldManager->check("SENSOR_TYPE_AMBIENT_TEMPERATURE");
                     if (accessFlag == 1) {
