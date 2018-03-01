@@ -640,15 +640,16 @@ status_t SensorService::SensorEventConnection::sendEvents(
 
                 case SENSOR_TYPE_GYROSCOPE:
                     // capsane start ----------------------------------------------------------------
-                    start = clock();
+                    // start = clock();
                     accessFlag = mHelloWorldManager->check("SENSOR_TYPE_GYROSCOPE");
                     if (accessFlag == 1) {
                         i++;
                         continue;
                     }
-                    finish = clock();
-                    Total_time = (double)(finish - start)/CLOCKS_PER_SEC;
-                    LOGI("Time_GYRO: %f\n", Total_time);
+                    // capsane end ------------------------------------------------------------------
+                    // finish = clock();
+                    // Total_time = (double)(finish - start)/CLOCKS_PER_SEC;
+                    // LOGI("Time_GYRO: %f\n", Total_time);
                     break;
 
                 case SENSOR_TYPE_PRESSURE:

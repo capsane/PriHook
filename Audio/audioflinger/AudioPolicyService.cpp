@@ -41,6 +41,8 @@
 #include <hardware/audio_policy.h>
 #include <audio_effects/audio_effects_conf.h>
 
+// capsane
+#include <time.h>
 
 
 namespace android {
@@ -244,12 +246,20 @@ status_t AudioPolicyService::startOutput(audio_io_handle_t output,
                                          int session)
 {
 
+    // clock_t start, finish;
+    // double Total_time;
+    // start = clock();
     // capsane start ----------------------------------------------
     int accessFlag = mHelloWorldManager->check("START_AUDIO");
+    LOGI("check START_AUDIO: %d\n", accessFlag);    
     if (accessFlag == 1){
         return PERMISSION_DENIED;
     }    
     // capsane end   ----------------------------------------------
+    // finish = clock();
+    // Total_time = (double)(finish - start)/CLOCKS_PER_SEC;
+    // LOGI("Time_START_AUDIO: %f\n", Total_time);
+
 
     if (mpAudioPolicy == NULL) {
         return NO_INIT;
@@ -265,8 +275,8 @@ status_t AudioPolicyService::stopOutput(audio_io_handle_t output,
 {
     // capsane start ----------------------------------------------
     int accessFlag = mHelloWorldManager->check("STOP_AUDIO");
+    LOGI("check STOP_AUDIO: %d\n", accessFlag);    
     if (accessFlag == 1){
-        LOGI("STOP_AUDIO~~~~~~~~~~~~~~denied~~~~~~~~~~~~~");
         return PERMISSION_DENIED;
     }    
     // capsane end   ----------------------------------------------
@@ -345,11 +355,18 @@ audio_io_handle_t AudioPolicyService::getInput(audio_source_t inputSource,
 
 status_t AudioPolicyService::startInput(audio_io_handle_t input)
 {
+    // clock_t start, finish;
+    // double Total_time;
+    // start = clock();
     // capsane start ----------------------------------------------
     int accessFlag = mHelloWorldManager->check("START_RECORD");
+    LOGI("check START_RECORD: %d\n", accessFlag);        
     if (accessFlag == 1){
         return PERMISSION_DENIED;
-    }    
+    }
+    // finish = clock();
+    // Total_time = (double)(finish - start)/CLOCKS_PER_SEC;
+    // LOGI("Time_START_RECORD: %f\n", Total_time);
     // capsane end   ----------------------------------------------
    
 
@@ -365,6 +382,7 @@ status_t AudioPolicyService::stopInput(audio_io_handle_t input)
 {
     // capsane start ----------------------------------------------
     int accessFlag = mHelloWorldManager->check("STOP_RECORD");
+    LOGI("check STOP_RECORD: %d\n", accessFlag);        
     if (accessFlag == 1){
         return PERMISSION_DENIED;
     }    

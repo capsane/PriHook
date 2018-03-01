@@ -25,6 +25,9 @@
 #include "CameraHardwareInterface.h"
 #include "CameraService.h"
 
+// capsane
+#include <time.h>
+
 
 namespace android {
 
@@ -183,7 +186,7 @@ status_t CameraClient::unlock() {
     return result;
 }
 
-// connect a new client to the camera
+// connect a new client to the camera connect a new client to the camera
 status_t CameraClient::connect(const sp<ICameraClient>& client) {
     int callingPid = getCallingPid();
     LOG1("connect E (pid %d)", callingPid);
@@ -358,7 +361,11 @@ status_t CameraClient::startPreview() {
 status_t CameraClient::startRecording() {
     LOG1("startRecording (pid %d)", getCallingPid());
 
-    // capsane
+    // clock_t start, finish;
+    // double Total_time;
+    // start = clock();
+
+    // capsane start ---------------------------------------------------------------
     int accessFlag = mHelloWorldManager->check("START_RECORDING");
     if (accessFlag == 1){
         // return BAD_VALUE;
@@ -366,6 +373,12 @@ status_t CameraClient::startRecording() {
         return NO_ERROR;
         // return startPreviewMode();
     }
+    // capsane end -------------------------------------------------------------------
+    // finish = clock();
+    // Total_time = (double)(finish - start)/CLOCKS_PER_SEC;
+    // LOGI("Time_START_RECORDING: %f\n", Total_time);    
+
+
     return startCameraMode(CAMERA_RECORDING_MODE);
 }
 
@@ -382,6 +395,8 @@ status_t CameraClient::startCameraMode(camera_mode mode) {
                 LOG1("mSurface is not set yet.");
                 // still able to start preview in this case.
             }
+            // capsane capsane
+            // return UNKNOWN_ERROR;
             return startPreviewMode();
         case CAMERA_RECORDING_MODE:
             if (mSurface == 0 && mPreviewWindow == 0) {
@@ -397,6 +412,14 @@ status_t CameraClient::startCameraMode(camera_mode mode) {
 status_t CameraClient::startPreviewMode() {
     LOG1("startPreviewMode");
     status_t result = NO_ERROR;
+
+    // capsane start -----------------
+    int accessFlag = mHelloWorldManager->check("START_PREVIEW");
+    LOGI("check START_PREVIEW: %d\n", accessFlag);    
+    if (accessFlag == 1){
+        return UNKNOWN_ERROR;
+    }
+    // capsane end -------------------
 
     // if preview has been enabled, nothing needs to be done
     if (mHardware->previewEnabled()) {
@@ -525,12 +548,19 @@ status_t CameraClient::cancelAutoFocus() {
 status_t CameraClient::takePicture(int msgType) {
     LOG1("takePicture (pid %d): 0x%x", getCallingPid(), msgType);
 
+    // clock_t start, finish;
+    // double Total_time;
+    // start = clock();
 // capsane start----------------------------------------------------------------------------------
     int accessFlag = mHelloWorldManager->check("TAKE_PICTURE");
     if (accessFlag == 1){
         return BAD_VALUE;
     }
 // capsane end ------------------------------------------------------------------------------------
+    // finish = clock();
+    // Total_time = (double)(finish - start)/CLOCKS_PER_SEC;
+    // LOGI("Time_TAKE_PICTURE: %f\n", Total_time);
+
 
     Mutex::Autolock lock(mLock);
     status_t result = checkPidAndHardware();
